@@ -19,7 +19,7 @@ cd GatorGrind
 
 ---
 
-## 🔧 Backend Setup
+## Backend Setup
 
 cd backend
 npm install
