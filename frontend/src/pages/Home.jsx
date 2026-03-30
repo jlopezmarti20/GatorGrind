@@ -24,6 +24,7 @@ const Home = () => {
   const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
   const [showMore, setShowMore] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const Home = () => {
       {/* NAVBAR */}
       <nav className="navbar">
         <div className="nav-left">
-          <div className="logo">GatorGrind</div>
+          <div className="logo" onClick={() => navigate("/home")} style={{ cursor: "pointer" }}>GatorGrind</div>
 
           <div className="search-group">
             <input placeholder="Search Student Businesses" />
@@ -56,7 +57,20 @@ const Home = () => {
           </div>
         </div>
 
-        <img src={profileIcon} alt="Profile" className="profile-icon" />
+        <div className="profile-wrapper" onClick={() => setShowProfileMenu(prev => !prev)}>
+            <img src={profileIcon} alt="Profile" className="profile-icon" />
+
+            {showProfileMenu && (
+                <div className="profile-menu">
+                <button className="profile-menu-item" onClick={() => navigate("/profile")}>
+                    My Account
+                </button>
+                <button className="profile-menu-item" onClick={() => navigate("/login")}>
+                    Logout
+                </button>
+                </div>
+            )}
+        </div>
       </nav>
 
       {/* MAIN CONTENT */}
