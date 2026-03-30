@@ -75,6 +75,17 @@ const Home = () => {
           )}
         </div>
 
+        {/* ABOUT / INFO SECTION */}
+        <div className="about-section">
+          <h2>Welcome to GatorGrind!</h2>
+          <p>
+            GatorGrind connects students with amazing student-run businesses across campus. 
+            Explore, discover, and support local student entrepreneurs. Use the search bar to 
+            find businesses by category or location, and easily add your own business to be 
+            discovered by fellow Gators!
+          </p>
+        </div>
+
         {/* CATEGORIES */}
         <div className="categories">
           <h2>Browse by Category</h2>
