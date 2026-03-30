@@ -189,7 +189,7 @@
   }
 
   .about-section {
-    background: #cedaff;
+    background: #cee1ff;
     padding: 20px 30px;
     border-radius: 16px;
     margin-bottom: 25px;
@@ -224,13 +224,47 @@
   
   .category-btn {
     padding: 10px 18px;
-    border-radius: 999px;
-    border: 1px solid #cbd5e1;
-    background: #f8fafc;
+    border-radius: 10px;
+    border: 1px solid #022279;
+    color: white;
+    background: #022279;
     cursor: pointer;
     font-weight: 600;
   }
   
   .category-btn:hover {
     background: #e0e7ff;
+  }
+
+  /* FOOTER */
+.footer {
+    background-color: #1d4ed8;
+    color: white;
+    padding: 20px 40px;
+    text-align: center;
+    border-radius: 0;
+    margin-top: 40px;
+  }
+  
+  .footer p {
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+  
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .footer-links a {
+    color: #f8fafc;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+  
+  .footer-links a:hover {
+    text-decoration: underline;
+    color: #e0e7ff;
   }

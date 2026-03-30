@@ -80,7 +80,7 @@ const Home = () => {
           <h2>Welcome to GatorGrind!</h2>
           <p>
             GatorGrind connects students with amazing student-run businesses across campus. 
-            Explore, discover, and support local student entrepreneurs. Use the search bar to 
+            Explore, discover, and support local student entrepreneurs. Use the search bars to 
             find businesses by category or location, and easily add your own business to be 
             discovered by fellow Gators!
           </p>
@@ -97,8 +97,18 @@ const Home = () => {
             ))}
           </div>
         </div>
-
       </div>
+
+      {/* FOOTER */}
+      <footer className="footer">
+        <p>&copy; {new Date().getFullYear()} GatorGrind. All rights reserved.</p>
+        <div className="footer-links">
+          <a href="#">About</a>
+          <a href="#">Contact</a>
+          <a href="#">Privacy Policy</a>
+        </div>
+      </footer>
+
     </div>
   );
 };
