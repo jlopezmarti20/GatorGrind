@@ -39,7 +39,7 @@ const Navbar = () => {
               className="profile-menu-item"
               onClick={() => navigate("/profile")}
             >
-              My Account
+              My Profile
             </button>
             <button
               className="profile-menu-item"

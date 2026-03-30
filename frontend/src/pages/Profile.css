@@ -3,3 +3,135 @@
     background: linear-gradient(180deg, #dfe9f7 0%, #ebf4ff 100%);
     font-family: Arial, Helvetica, sans-serif;
   }
+
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 100px;
+    padding: 80px;
+    min-height: calc(100vh - 80px); 
+  }
+  
+  .profile-left, .profile-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile-left {
+    max-width: 300px;
+  }
+  
+  .profile-image {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #1d4ed8;
+    margin-bottom: 20px;
+  }
+  
+  .profile-buttons {
+    display: flex;
+    flex-direction: row;
+    margin-top: 16px;
+    gap: 18px;          
+    width: 100%;
+  }
+  
+  .profile-buttons .btn {
+    flex: 1;
+    padding: 0px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+  }
+  
+  .edit-btn {
+    background-color: #1d4ed8;
+    color: white;
+    font-size: 18px;
+  }
+  
+  .edit-btn:hover {
+    background-color: #1e40af;
+  }
+  
+  .upload-btn {
+    background-color: #ffffff;
+    color: #1d4ed8;
+    border: 1px solid #1d4ed8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* added to match edit-btn */
+  }
+  
+  .upload-btn:hover {
+    background-color: #dce4ff;
+  }
+  
+  .remove-btn {
+    background-color: #ef4444;
+    color: white;
+  }
+  
+  .remove-btn:hover {
+    background-color: #dc2626;
+  }
+  
+  /* RIGHT COLUMN */
+  .profile-right {
+    max-width: 400px;
+    align-items: flex-start;
+  }
+  
+  .greeting {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #022279;
+  }
+  
+  .profile-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+  }
+  
+  .option-btn {
+    padding: 12px 20px;
+    border-radius: 12px;
+    background-color: #f8fafc;
+    border: 1.5px solid #022279;
+    color: #022279;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .option-btn:hover {
+    background-color: #eef2ff;
+  }
+  
+  @media (max-width: 900px) {
+    .profile-container {
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+  
+    .profile-right {
+      align-items: center;
+    }
+  
+    .option-btn {
+      text-align: center;
+    }
+  }
