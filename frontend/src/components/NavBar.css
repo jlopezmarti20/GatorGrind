@@ -1,0 +1,144 @@
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    position: sticky;
+    top: 0; 
+    background-color: #1d4ed8; 
+    color: white; 
+    z-index: 1000;
+  }
+  
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+  }
+  
+  .logo {
+    font-weight: 700;
+    font-size: 20px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  /* SEARCH GROUP */
+  .search-group {
+    display: flex;
+    gap: 30px;
+    width: 1100px;
+    max-width: 100%;
+  }
+  
+  @media (max-width: 1200px) {
+    .search-group {
+      width: 90%;
+      gap: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .search-group {
+      flex-direction: column;
+      width: 100%; 
+      gap: 12px;
+    }
+  }
+  
+  .search-group input {
+    flex: 1; 
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    outline: none;
+    transition: 0.2s;
+    color: #000; 
+  }
+  
+  .search-group input:focus {
+    border-color: #96b4f5;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+  }
+  
+  /* BUTTONS */
+  .btn {
+    height: 42px;
+    padding: 0 14px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .view-btn {
+    background: #022279;
+    color: white;
+  }
+  
+  .view-btn:hover {
+    background: #163187;
+  }
+  
+  .add-btn {
+    background: #ffffff;
+    color: #1d4ed8;
+  }
+  
+  .add-btn:hover {
+    background: #dce4ff;
+  }
+  
+  /* PROFILE */
+  .profile-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-right: 10px;
+  }
+  
+  .profile-icon:hover {
+    transform: scale(1.05);
+  }
+  
+  .profile-wrapper {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .profile-menu {
+    position: absolute;
+    top: 45px; 
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+  }
+  
+  .profile-menu-item {
+    padding: 10px 15px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    color: #022279;
+  }
+  
+  .profile-menu-item:hover {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+  }

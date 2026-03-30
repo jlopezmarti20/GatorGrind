@@ -1,0 +1,5 @@
+.profile-page {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #dfe9f7 0%, #ebf4ff 100%);
+    font-family: Arial, Helvetica, sans-serif;
+  }

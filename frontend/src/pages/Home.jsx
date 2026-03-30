@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/NavBar";
 import "./Home.css";
-import profileIcon from "../assets/profileIcon.png";
 import placeholderImage from "../assets/placeholderImage.png";
 import arrowIcon from "../assets/right-arrow.png";
 
@@ -24,7 +24,6 @@ const Home = () => {
   const [images, setImages] = useState([]);
   const [current, setCurrent] = useState(0);
   const [showMore, setShowMore] = useState(false);
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,36 +41,7 @@ const Home = () => {
   return (
     <div className="home">
 
-      {/* NAVBAR */}
-      <nav className="navbar">
-        <div className="nav-left">
-          <div className="logo" onClick={() => navigate("/home")} style={{ cursor: "pointer" }}>GatorGrind</div>
-
-          <div className="search-group">
-            <input placeholder="Search Student Businesses" />
-            <input placeholder="Where?" />
-
-            <button className="btn view-btn">Grid View</button>
-            <button className="btn view-btn">Map View</button>
-            <button className="btn add-btn">+ Add a Business</button>
-          </div>
-        </div>
-
-        <div className="profile-wrapper" onClick={() => setShowProfileMenu(prev => !prev)}>
-            <img src={profileIcon} alt="Profile" className="profile-icon" />
-
-            {showProfileMenu && (
-                <div className="profile-menu">
-                <button className="profile-menu-item" onClick={() => navigate("/profile")}>
-                    My Account
-                </button>
-                <button className="profile-menu-item" onClick={() => navigate("/login")}>
-                    Logout
-                </button>
-                </div>
-            )}
-        </div>
-      </nav>
+    <Navbar />
 
       {/* MAIN CONTENT */}
       <div className="main">
