@@ -27,6 +27,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setImages([placeholderImage, placeholderImage, placeholderImage]);
   }, []);
 
@@ -100,7 +101,7 @@ const Home = () => {
 
           <div
             className="view-all-businesses"
-            onClick={() => navigate("/grid-view")}
+            onClick={() => navigate("/map-view")}
           >
             View All Businesses
             <img src={arrowIcon} alt="arrow" className="arrow-icon" />
