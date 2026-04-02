@@ -12,6 +12,9 @@ const businesses = Array.from({ length: 9 }, (_, i) => ({
   image: placeholderImage,
 }));
 
+
+const categories = ["Hair", "Tech", "Fashion", "Art", "Food & Drink", "Services", "Wellness", "Education", "Entertainment"];
+
 const GridView = () => {
   const navigate = useNavigate();
 
@@ -27,14 +30,27 @@ const GridView = () => {
 
             <select className="grid-filter-select">
               <option>Category</option>
+              {[...categories].map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}            
             </select>
 
             <select className="grid-filter-select">
               <option>Distance</option>
+              <option value="1">Under 1 mile</option>
+              <option value="5">Under 5 miles</option>
+              <option value="10">Under 10 miles</option>
             </select>
 
             <select className="grid-filter-select">
               <option>Rating</option>
+              <option value="1">1 Star</option>
+              <option value="2">2 Stars</option>
+              <option value="3">3 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="5">5 Stars</option>
             </select>
           </div>
         </div>
