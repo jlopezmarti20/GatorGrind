@@ -58,7 +58,7 @@ const Home = () => {
                 <div className="carousel-text-top">
                   Business {current + 1} Name & Owner
                 </div>
-                <button className="carousel-btn-bottom">
+                <button className="carousel-btn-bottom" onClick={() => navigate("/business")}>
                   View Business
                 </button>
               </div>
@@ -101,7 +101,7 @@ const Home = () => {
 
           <div
             className="view-all-businesses"
-            onClick={() => navigate("/map-view")}
+            onClick={() => navigate("/grid-view")}
           >
             View All Businesses
             <img src={arrowIcon} alt="arrow" className="arrow-icon" />
