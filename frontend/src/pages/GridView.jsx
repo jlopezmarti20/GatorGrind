@@ -28,7 +28,6 @@ const GridView = () => {
 
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("");
 
   const [userLocation, setUserLocation] = useState(UF_CENTER);
   const [locationSource, setLocationSource] = useState("uf-center");
