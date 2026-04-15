@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
+const Business = require('../models/business');
 
 const router = express.Router();
 
@@ -48,6 +49,52 @@ router.post("/login", async (req, res) => {
     res.status(200).json({ message: "Login successful" });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Creating Business Route 
+router.post("/businesses/create", async (req, res) => {
+  try {
+    const {
+      businessName,
+      address1,
+      address2,
+      city,
+      state,
+      zipCode,
+      webAddress,
+      description,
+      category,
+      owner
+    } = req.body;
+
+    const newBusiness = new Business({
+      business_name: businessName,
+      owner: owner, // ObjectId from user
+      address: {
+        address1,
+        address2,
+        city,
+        state,
+        zipCode
+      },
+      website_url: webAddress,
+      description,
+      category,
+      rating: 0,
+      is_verified: false
+    });
+
+    await newBusiness.save();
+
+    res.status(201).json({
+      message: "Business created successfully",
+      business: newBusiness
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error creating business" });
   }
 });
 
