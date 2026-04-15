@@ -54,8 +54,6 @@ router.get("/:id", async (req, res) => {
   try {
     const business = await Business.findById(req.params.id);
 
-    console.log("🔍 BUSINESS FROM DB:", business); // 👈 ADD IT HERE
-
     if (!business) {
       return res.status(404).json({ message: "Business not found" });
     }
