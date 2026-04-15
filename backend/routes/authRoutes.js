@@ -47,9 +47,43 @@ router.post("/login", async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
-      userId: user._id
+      userId: user._id,
+      fullName: user.fullName,
     });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
+// Update account settings
+router.put("/update/:userId", async (req, res) => {
+  try {
+    const { fullName, email, currentPassword, newPassword } = req.body;
+    const user = await User.findById(req.params.userId);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (fullName) user.fullName = fullName;
+    if (email) user.email = email;
+
+    if (currentPassword && newPassword) {
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+      if (!isMatch)
+        return res
+          .status(400)
+          .json({ message: "Current password is incorrect" });
+      user.password = await bcrypt.hash(newPassword, 10);
+    }
+
+    await user.save();
+
+    // update localStorage name if changed
+    res
+      .status(200)
+      .json({
+        message: "Account updated successfully",
+        fullName: user.fullName,
+      });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }

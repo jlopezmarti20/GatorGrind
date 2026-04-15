@@ -37,7 +37,9 @@ router.post("/:id/reviews", async (req, res) => {
     }
 
     if (!rating || rating < 1 || rating > 5) {
-      return res.status(400).json({ message: "Rating must be between 1 and 5" });
+      return res
+        .status(400)
+        .json({ message: "Rating must be between 1 and 5" });
     }
 
     const existingReview = await Review.findOne({
@@ -69,6 +71,20 @@ router.post("/:id/reviews", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error submitting review" });
+  }
+});
+
+// get reviews by user
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const reviews = await Review.find({ user: req.params.userId })
+      .populate("business", "business_name category address")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(reviews);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching user reviews" });
   }
 });
 
