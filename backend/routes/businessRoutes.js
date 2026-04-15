@@ -1,5 +1,5 @@
 const express = require("express");
-const Business = require("./models/Business");
+const Business = require("../models/Business");
 
 const router = express.Router();
 
@@ -48,3 +48,5 @@ router.post("/create", async (req, res) => {
     res.status(500).json({ message: "Error creating business" });
   }
 });
+
+module.exports = router;
