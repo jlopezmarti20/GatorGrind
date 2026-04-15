@@ -19,12 +19,21 @@ const GridView = () => {
 
   const [businesses, setBusinesses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   // fetching all businesses
   useEffect(() => {
     const fetchBusinesses = async () => {
       try {
-        const res = await axios.get("http://localhost:5001/api/businesses");
+        setLoading(true);
+  
+        const res = await axios.get(
+          "http://localhost:5001/api/businesses",
+          {
+            params: selectedCategory ? { category: selectedCategory } : {}
+          }
+        );
+  
         setBusinesses(res.data);
       } catch (err) {
         console.error("Error fetching businesses:", err);
@@ -32,9 +41,9 @@ const GridView = () => {
         setLoading(false);
       }
     };
-
+  
     fetchBusinesses();
-  }, []);
+  }, [selectedCategory]);
 
   return (
     <div className="grid-page">
@@ -46,8 +55,12 @@ const GridView = () => {
           <div className="grid-filters-row">
             <span className="grid-filter-label">Filter By:</span>
 
-            <select className="grid-filter-select">
-              <option>Category</option>
+            <select
+              className="grid-filter-select"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option value="">Category</option>
               {categories.map((category) => (
                 <option key={category} value={category}>
                   {category}

@@ -76,4 +76,23 @@ router.get("/", async (req, res) => {
   }
 });
 
+// filtering businesses
+router.get("/", async (req, res) => {
+  try {
+    const { category } = req.query;
+
+    let filter = {};
+
+    if (category) {
+      filter.category = category;
+    }
+
+    const businesses = await Business.find(filter);
+
+    res.json(businesses);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching businesses" });
+  }
+});
+
 module.exports = router;
