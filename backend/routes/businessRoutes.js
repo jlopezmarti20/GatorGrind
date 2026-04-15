@@ -49,7 +49,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-// getting business route 
+// getting a single business route 
 router.get("/:id", async (req, res) => {
   try {
     const business = await Business.findById(req.params.id);
@@ -62,6 +62,17 @@ router.get("/:id", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching business" });
+  }
+});
+
+// fethcing all businesses route
+router.get("/", async (req, res) => {
+  try {
+    const businesses = await Business.find();
+    res.status(200).json(businesses);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching businesses" });
   }
 });
 

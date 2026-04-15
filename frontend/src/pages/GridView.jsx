@@ -1,22 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/NavBar";
 import "./GridView.css";
-import placeholderImage from "../assets/placeholderImage.png";
 import arrowIcon from "../assets/right-arrow.png";
+import axios from "axios";
 
-const businesses = Array.from({ length: 9 }, (_, i) => ({
-  id: i + 1,
-  name: `Student Business ${i + 1}`,
-  category: "Category",
-  image: placeholderImage,
-}));
-
+  // const businesses = Array.from({ length: 9 }, (_, i) => ({
+    // id: i + 1,
+    // name: `Student Business ${i + 1}`,
+    // category: "Category",
+    // image: placeholderImage,
+  // }));
 
 const categories = ["Hair", "Tech", "Fashion", "Art", "Food & Drink", "Services", "Wellness", "Education", "Entertainment"];
 
 const GridView = () => {
   const navigate = useNavigate();
+
+  const [businesses, setBusinesses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // fetching all businesses
+  useEffect(() => {
+    const fetchBusinesses = async () => {
+      try {
+        const res = await axios.get("http://localhost:5001/api/businesses");
+        setBusinesses(res.data);
+      } catch (err) {
+        console.error("Error fetching businesses:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBusinesses();
+  }, []);
 
   return (
     <div className="grid-page">
@@ -30,11 +48,11 @@ const GridView = () => {
 
             <select className="grid-filter-select">
               <option>Category</option>
-              {[...categories].map((category) => (
+              {categories.map((category) => (
                 <option key={category} value={category}>
                   {category}
                 </option>
-              ))}            
+              ))}
             </select>
 
             <select className="grid-filter-select">
@@ -57,30 +75,32 @@ const GridView = () => {
 
         {/* Grid */}
         <div className="business-grid">
-          {businesses.map((business) => (
-            <div className="business-card" key={business.id}>
-              <img
-                src={business.image}
-                alt={business.name}
-                className="business-card-image"
-              />
+          {loading ? (
+            <p>Loading businesses...</p>
+          ) : (
+            businesses.map((business) => (
+              <div className="business-card" key={business._id}>
+                <div className="business-card-footer">
+                  <div className="business-card-text">
+                    <h3>{business.business_name}</h3>
+                    <p>{business.category}</p>
+                  </div>
 
-              <div className="business-card-footer">
-                <div className="business-card-text">
-                  <h3>{business.name}</h3>
-                  <p>{business.category}</p>
+                  <button
+                    className="business-view-btn"
+                    onClick={() => navigate(`/business/${business._id}`)}
+                  >
+                    View Business
+                    <img
+                      src={arrowIcon}
+                      alt="arrow"
+                      className="business-arrow-icon"
+                    />
+                  </button>
                 </div>
-
-                <button
-                  className="business-view-btn"
-                  onClick={() => navigate()}
-                >
-                  View Business
-                  <img src={arrowIcon} alt="arrow" className="business-arrow-icon" />
-                </button>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
 
