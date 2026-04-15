@@ -151,7 +151,7 @@ const Business = () => {
         {/* Business Header */}
         <div className="business-header">
           <div className="business-title-section">
-            <h1 className="business-name">{business.businessName}</h1>
+          <h1 className="business-name">{business.business_name}</h1>
             <button 
               className={`bookmark-btn ${isBookmarked ? 'bookmarked' : ''}`}
               onClick={handleBookmark}
@@ -161,9 +161,9 @@ const Business = () => {
           </div>
           
           <div className="business-address">
-            <p>{business.address1}</p>
-            {business.address2 && <p>{business.address2}</p>}
-            <p>{business.city}, {business.state} {business.zipCode}</p>
+            <p>{business.address?.address1}</p>
+            {business.address?.address2 && <p>{business.address.address2}</p>}
+            <p>{business.address?.city}, {business.address?.state} {business.address?.zipCode}</p>
           </div>
           
           <div className="business-rating-category">
@@ -189,9 +189,9 @@ const Business = () => {
         </div>
 
         {/* Website Link */}
-        {business.webAddress && (
+        {business.website_url && (
           <div className="business-website">
-            <a href={business.webAddress} target="_blank" rel="noopener noreferrer" className="website-link">
+            <a href={business.website_url} target="_blank" rel="noopener noreferrer" className="website-link">
               Visit Business Website →
             </a>
           </div>

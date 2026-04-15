@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
+const businessRoutes = require("./routes/businessRoutes");
 
 const app = express();
 
@@ -16,6 +17,7 @@ mongoose
   .catch((error) => console.log("MongoDB connection error:", error));
 
 app.use("/api/auth", authRoutes);
+app.use("/api/businesses", businessRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend is running");
