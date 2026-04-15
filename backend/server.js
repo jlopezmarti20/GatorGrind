@@ -5,6 +5,8 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
 const businessRoutes = require("./routes/businessRoutes");
+const bookmarkRoutes = require("./routes/bookmarkRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
 
 const app = express();
 
@@ -18,6 +20,8 @@ mongoose
 
 app.use("/api/auth", authRoutes);
 app.use("/api/businesses", businessRoutes);
+app.use("/api/users", bookmarkRoutes);
+app.use("/api/businesses", reviewRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend is running");

@@ -1,9 +1,41 @@
 const express = require("express");
+const axios = require("axios");
 const Business = require("../models/Business");
 
 const router = express.Router();
 
-// creating a business route 
+async function geocodeAddress({ address1, address2, city, state, zipCode }) {
+  const fullAddress = [address1, address2, city, state, zipCode]
+    .filter(Boolean)
+    .join(", ");
+
+  try {
+    const response = await axios.get("https://nominatim.openstreetmap.org/search", {
+      params: {
+        q: fullAddress,
+        format: "jsonv2",
+        limit: 1
+      },
+      headers: {
+        "User-Agent": "GatorGrind/1.0 (student project)"
+      }
+    });
+
+    if (!response.data || response.data.length === 0) {
+      return null;
+    }
+
+    return {
+      latitude: Number(response.data[0].lat),
+      longitude: Number(response.data[0].lon)
+    };
+  } catch (error) {
+    console.error("Geocoding error:", error.message);
+    return null;
+  }
+}
+
+// create a business
 router.post("/create", async (req, res) => {
   try {
     const {
@@ -19,9 +51,17 @@ router.post("/create", async (req, res) => {
       owner
     } = req.body;
 
+    const geo = await geocodeAddress({
+      address1,
+      address2,
+      city,
+      state,
+      zipCode
+    });
+
     const newBusiness = new Business({
       business_name: businessName,
-      owner: owner,
+      owner,
       address: {
         address1,
         address2,
@@ -29,9 +69,15 @@ router.post("/create", async (req, res) => {
         state,
         zipCode
       },
-      website_url: webAddress,
-      description,
+      location: geo
+        ? {
+            type: "Point",
+            coordinates: [geo.longitude, geo.latitude]
+          }
+        : undefined,
       category,
+      description,
+      website_url: webAddress,
       rating: 0,
       is_verified: false
     });
@@ -42,14 +88,13 @@ router.post("/create", async (req, res) => {
       message: "Business created successfully",
       business: newBusiness
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating business" });
   }
 });
 
-// getting a single business route 
+// get a business
 router.get("/:id", async (req, res) => {
   try {
     const business = await Business.findById(req.params.id);
@@ -65,10 +110,38 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// fethcing all businesses route
+// get all businesses with filtering
 router.get("/", async (req, res) => {
   try {
-    const businesses = await Business.find();
+    const { category, rating, distance, lat, lng } = req.query;
+
+    const filter = {};
+
+    if (category) {
+      filter.category = category;
+    }
+
+    if (rating) {
+      filter.rating = { $gte: Number(rating) };
+    }
+
+    if (distance) {
+      const userLat = lat ? Number(lat) : UF_CENTER.lat;
+      const userLng = lng ? Number(lng) : UF_CENTER.lng;
+      const maxDistanceInMeters = Number(distance) * 1609.34;
+
+      filter.location = {
+        $near: {
+          $geometry: {
+            type: "Point",
+            coordinates: [userLng, userLat]
+          },
+          $maxDistance: maxDistanceInMeters
+        }
+      };
+    }
+
+    const businesses = await Business.find(filter);
     res.status(200).json(businesses);
   } catch (error) {
     console.error(error);

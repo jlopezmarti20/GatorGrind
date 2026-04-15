@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const businessSchema = new mongoose.Schema({
   business_name: {
@@ -17,7 +17,21 @@ const businessSchema = new mongoose.Schema({
     state: String,
     zipCode: String
   },
-  category: String,
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      default: "Point"
+    },
+    coordinates: {
+      type: [Number],
+      default: undefined
+    }
+  },
+  category: {
+    type: String,
+    required: true
+  },
   description: String,
   website_url: String,
   rating: {
@@ -30,4 +44,6 @@ const businessSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Business', businessSchema);
+businessSchema.index({ location: "2dsphere" });
+
+module.exports = mongoose.model("Business", businessSchema);

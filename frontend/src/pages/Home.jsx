@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/NavBar";
 import "./Home.css";
@@ -21,79 +21,132 @@ const extraCategories = [
 ];
 
 const Home = () => {
-  const [images, setImages] = useState([]);
+  const [businesses, setBusinesses] = useState([]);
   const [current, setCurrent] = useState(0);
   const [showMore, setShowMore] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setImages([placeholderImage, placeholderImage, placeholderImage]);
+    const fetchBusinesses = async () => {
+      try {
+        const response = await fetch("http://localhost:5001/api/businesses");
+        if (!response.ok) {
+          throw new Error("Failed to fetch businesses");
+        }
+
+        const data = await response.json();
+        setBusinesses(data);
+      } catch (error) {
+        console.error("Error fetching businesses:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBusinesses();
   }, []);
 
+  const featuredBusinesses = useMemo(() => {
+    return businesses.slice(0, 3);
+  }, [businesses]);
+
   const next = () => {
-    setCurrent((prev) => (prev + 1) % images.length);
+    if (featuredBusinesses.length === 0) return;
+    setCurrent((prev) => (prev + 1) % featuredBusinesses.length);
   };
 
   const prev = () => {
-    setCurrent((prev) => (prev - 1 + images.length) % images.length);
+    if (featuredBusinesses.length === 0) return;
+    setCurrent((prev) => (prev - 1 + featuredBusinesses.length) % featuredBusinesses.length);
   };
+
+  const handleCategoryClick = (category) => {
+    navigate("/grid-view", { state: { selectedCategory: category } });
+  };
+
+  const handleViewBusiness = (businessId) => {
+    navigate(`/business/${businessId}`);
+  };
+
+  const currentBusiness = featuredBusinesses[current];
 
   return (
     <div className="home">
+      <Navbar />
 
-    <Navbar />
-
-      {/* MAIN CONTENT */}
       <div className="main">
-
-        {/* CAROUSEL */}
         <div className="carousel">
-          {images.length > 0 && (
+          {loading ? (
+            <p>Loading businesses...</p>
+          ) : featuredBusinesses.length > 0 ? (
             <div className="carousel-wrapper">
               <button className="arrow left" onClick={prev}>‹</button>
 
               <div className="carousel-slide">
-                <img src={images[current]} alt={`Business ${current + 1}`} />
+                <img
+                  src={placeholderImage}
+                  alt={currentBusiness.business_name}
+                />
+
                 <div className="carousel-text-top">
-                  Business {current + 1} Name & Owner
+                  {currentBusiness.business_name}{" "}
+                  {currentBusiness.owner?.fullName
+                    ? `• ${currentBusiness.owner.fullName}`
+                    : ""}
                 </div>
-                <button className="carousel-btn-bottom" onClick={() => navigate("/business")}>
+
+                <button
+                  className="carousel-btn-bottom"
+                  onClick={() => handleViewBusiness(currentBusiness._id)}
+                >
                   View Business
                 </button>
               </div>
 
               <button className="arrow right" onClick={next}>›</button>
             </div>
+          ) : (
+            <p>No businesses found.</p>
           )}
         </div>
 
-        {/* ABOUT / INFO SECTION */}
         <div className="about-section">
           <h2>Welcome to GatorGrind!</h2>
           <p>
-            GatorGrind connects students with amazing student-run businesses across campus. 
-            Explore, discover, and support local student entrepreneurs. Use the search bars to 
-            find businesses by category or location, and easily add your own business to be 
+            GatorGrind connects students with amazing student-run businesses across campus.
+            Explore, discover, and support local student entrepreneurs. Use the search bars to
+            find businesses by category or location, and easily add your own business to be
             discovered by fellow Gators!
           </p>
         </div>
 
-        {/* CATEGORIES */}
         <div className="categories">
           <h2>Browse by Category</h2>
           <div className="category-list">
             {mainCategories.map((cat, i) => (
-              <button key={i} className="category-btn">{cat}</button>
+              <button
+                key={i}
+                className="category-btn"
+                onClick={() => handleCategoryClick(cat)}
+              >
+                {cat}
+              </button>
             ))}
 
             {showMore && extraCategories.map((cat, i) => (
-              <button key={`extra-${i}`} className="category-btn">{cat}</button>
+              <button
+                key={`extra-${i}`}
+                className="category-btn"
+                onClick={() => handleCategoryClick(cat)}
+              >
+                {cat}
+              </button>
             ))}
 
             <button
               className="category-btn more-btn"
-              onClick={() => setShowMore(prev => !prev)}
+              onClick={() => setShowMore((prev) => !prev)}
             >
               {showMore ? "Show Less" : "More"}
             </button>
@@ -109,7 +162,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* FOOTER */}
       <footer className="footer">
         <p>&copy; {new Date().getFullYear()} GatorGrind. All rights reserved.</p>
         <div className="footer-links">
@@ -118,7 +170,6 @@ const Home = () => {
           <a href="#">Privacy Policy</a>
         </div>
       </footer>
-
     </div>
   );
 };
