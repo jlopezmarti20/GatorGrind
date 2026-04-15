@@ -49,4 +49,22 @@ router.post("/create", async (req, res) => {
   }
 });
 
+// getting business route 
+router.get("/:id", async (req, res) => {
+  try {
+    const business = await Business.findById(req.params.id);
+
+    console.log("🔍 BUSINESS FROM DB:", business); // 👈 ADD IT HERE
+
+    if (!business) {
+      return res.status(404).json({ message: "Business not found" });
+    }
+
+    res.status(200).json(business);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching business" });
+  }
+});
+
 module.exports = router;

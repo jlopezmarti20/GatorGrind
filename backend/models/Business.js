@@ -7,18 +7,19 @@ const businessSchema = new mongoose.Schema({
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true
   },
-  category: {
-    type: String
+  address: {
+    address1: String,
+    address2: String,
+    city: String,
+    state: String,
+    zipCode: String
   },
-  description: {
-    type: String
-  },
-  website_url: {
-    type: String
-  },
+  category: String,
+  description: String,
+  website_url: String,
   rating: {
     type: Number,
     default: 0
