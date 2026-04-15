@@ -7,6 +7,7 @@ import AddBusiness from "./pages/AddBusiness";
 import Business from "./pages/Business";
 import MapView from "./pages/MapView";
 import GridView from "./pages/GridView"
+import Bookmarks from "./pages/Bookmarks";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/business/:id" element={<Business />} />
         <Route path="/map-view" element={<MapView />} />
         <Route path="/grid-view" element={<GridView />} />
+        <Route path="/bookmarks" element={<Bookmarks />} />
       </Routes>
     </BrowserRouter>
   );

@@ -10,16 +10,10 @@ const Profile = () => {
   const [profilePic, setProfilePic] = useState(null);
 
   // placeholder
-  useEffect(() => {
-    const fetchUser = async () => {
-      // const res = await fetch('/api/user'); 
-      // const data = await res.json();
-      const data = { name: "User", profilePic: null }; // mock
-      setUserName(data.name);
-      setProfilePic(data.profilePic); 
-    };
-    fetchUser();
-  }, []);
+ useEffect(() => {
+  const name = localStorage.getItem("fullName");
+  if (name) setUserName(name);
+}, []);
 
   const handleUpload = (e) => {
     const file = e.target.files[0];

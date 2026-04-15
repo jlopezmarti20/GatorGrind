@@ -1,0 +1,126 @@
+.bookmarks-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #dfe9f7 0%, #ebf4ff 100%);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bookmarks-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #1d4ed8;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.back-btn:hover {
+  color: #1e40af;
+  text-decoration: underline;
+}
+
+.bookmarks-container h1 {
+  font-size: 32px;
+  color: #022279;
+  margin-bottom: 30px;
+}
+
+.no-bookmarks {
+  text-align: center;
+  color: #64748b;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bookmarks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.bookmark-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 22px rgba(29, 78, 216, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.bookmark-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(29, 78, 216, 0.15);
+}
+
+.bookmark-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.bookmark-info {
+  padding: 16px;
+}
+
+.bookmark-info h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: #022279;
+}
+
+.bookmark-info p {
+  margin: 0 0 4px;
+  font-size: 14px;
+  color: #4b5b88;
+  font-weight: 500;
+}
+
+.remove-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background: white;
+  color: #dc2626;
+  border: 1.5px solid #dc2626;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.remove-btn:hover {
+  background: #dc2626;
+  color: white;
+}
+
+@media (max-width: 1100px) {
+  .bookmarks-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .bookmarks-container {
+    padding: 20px;
+  }
+
+  .bookmarks-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bookmarks-container h1 {
+    font-size: 24px;
+  }
+}
