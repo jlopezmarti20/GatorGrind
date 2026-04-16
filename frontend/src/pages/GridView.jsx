@@ -39,12 +39,45 @@ const GridView = () => {
   );
   const [selectedRating, setSelectedRating] = useState("");
   const [selectedDistance, setSelectedDistance] = useState("");
+  
+  // State for search functionality
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchLocation, setSearchLocation] = useState("");
+
+  // Parse URL parameters on component mount and when location changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const query = params.get('query');
+    const loc = params.get('location');
+    
+    if (query) {
+      setSearchQuery(query);
+    }
+    if (loc) {
+      setSearchLocation(loc);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     if (location.state?.selectedCategory) {
       setSelectedCategory(location.state.selectedCategory);
     }
   }, [location.state]);
+
+  // Listen for custom search events from NavBar
+  useEffect(() => {
+    const handleSearchEvent = (event) => {
+      const { business, location } = event.detail;
+      setSearchQuery(business || "");
+      setSearchLocation(location || "");
+    };
+
+    window.addEventListener('search', handleSearchEvent);
+    
+    return () => {
+      window.removeEventListener('search', handleSearchEvent);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchBusinesses = async () => {
@@ -116,7 +149,7 @@ const GridView = () => {
   };
 
   const filteredAndSortedBusinesses = useMemo(() => {
-    return businesses
+    let filtered = businesses
       .map((business) => {
         let distance = null;
 
@@ -153,15 +186,39 @@ const GridView = () => {
           (business.distance !== null &&
             !isNaN(business.distance) &&
             business.distance <= Number(selectedDistance));
+            
+        // Search query filter (searches business name, description, and category)
+        const matchesSearchQuery = !searchQuery || 
+          business.business_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          business.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          business.category?.toLowerCase().includes(searchQuery.toLowerCase());
+          
+        // Search location filter (checks if business location info includes search location)
+        const matchesSearchLocation = !searchLocation ||
+          business.location?.address?.toLowerCase().includes(searchLocation.toLowerCase()) ||
+          business.location?.city?.toLowerCase().includes(searchLocation.toLowerCase()) ||
+          business.location?.state?.toLowerCase().includes(searchLocation.toLowerCase()) ||
+          business.location?.zip?.toString().includes(searchLocation);
 
-        return matchesCategory && matchesRating && matchesDistance;
+        return matchesCategory && matchesRating && matchesDistance && 
+               matchesSearchQuery && matchesSearchLocation;
       })
       .sort((a, b) => {
         if (a.distance === null) return 1;
         if (b.distance === null) return -1;
         return a.distance - b.distance;
       });
-  }, [businesses, selectedCategory, selectedRating, selectedDistance, userLocation]);
+      
+    return filtered;
+  }, [businesses, selectedCategory, selectedRating, selectedDistance, userLocation, searchQuery, searchLocation]);
+
+  // Clear search function
+  const clearSearch = () => {
+    setSearchQuery("");
+    setSearchLocation("");
+    // Optional: Clear URL parameters without reloading
+    navigate('/grid-view', { replace: true });
+  };
 
   return (
     <div className="grid-page">
@@ -169,6 +226,27 @@ const GridView = () => {
 
       <div className="grid-main">
         <div className="grid-top-section">
+          {/* Display active search filters */}
+          {(searchQuery || searchLocation) && (
+            <div className="active-search-filters">
+              <div className="search-summary">
+                {searchQuery && (
+                  <span>
+                    🔍 Business: "{searchQuery}"
+                  </span>
+                )}
+                {searchLocation && (
+                  <span>
+                    📍 Location: "{searchLocation}"
+                  </span>
+                )}
+              </div>
+              <button className="clear-search-btn" onClick={clearSearch}>
+                Clear Search
+              </button>
+            </div>
+          )}
+          
           <div className="grid-filters-row">
             <span className="grid-filter-label">Filter By:</span>
 
@@ -215,10 +293,10 @@ const GridView = () => {
           {loading ? (
             <p>Loading businesses...</p>
           ) : filteredAndSortedBusinesses.length === 0 ? (
-            <p>No businesses match these filters.</p>
+            <p>No businesses match these filters or search criteria.</p>
           ) : (
-            filteredAndSortedBusinesses.map((business) => (
-              <div className="business-card" key={business._id}>
+            filteredAndSortedBusinesses.map((business, index) => (
+              <div className="business-card" key={business._id} style={{ animationDelay: `${index * 0.05}s` }}>
                 <div className="business-card-footer">
                   <div className="business-card-text">
                     <h3>{business.business_name}</h3>
