@@ -82,6 +82,59 @@
   cursor: pointer;
 }
 
+/* Active Search Filters Styles */
+.active-search-filters {
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
+  border-radius: 16px;
+  border-left: 4px solid #1d4ed8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.search-summary {
+  font-size: 14px;
+  font-weight: 600;
+  color: #022279;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-summary span {
+  background: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  color: #1d4ed8;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.clear-search-btn {
+  padding: 8px 16px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+}
+
+.clear-search-btn:hover {
+  background: #b91c1c;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
 .business-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -94,6 +147,34 @@
   overflow: hidden;
   box-shadow: 0 8px 22px rgba(29, 78, 216, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: fadeInUp 0.4s ease backwards;
+}
+
+.business-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(29, 78, 216, 0.15);
+}
+
+/* Stagger animation for cards */
+.business-card:nth-child(1) { animation-delay: 0.05s; }
+.business-card:nth-child(2) { animation-delay: 0.1s; }
+.business-card:nth-child(3) { animation-delay: 0.15s; }
+.business-card:nth-child(4) { animation-delay: 0.2s; }
+.business-card:nth-child(5) { animation-delay: 0.25s; }
+.business-card:nth-child(6) { animation-delay: 0.3s; }
+.business-card:nth-child(7) { animation-delay: 0.35s; }
+.business-card:nth-child(8) { animation-delay: 0.4s; }
+.business-card:nth-child(9) { animation-delay: 0.45s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .business-card-image {
@@ -183,6 +264,19 @@
   color: #e0e7ff;
 }
 
+/* Loading and Empty States */
+.loading-state,
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #4b5b88;
+  background: white;
+  border-radius: 20px;
+  grid-column: 1 / -1;
+}
+
+/* Responsive Design */
 @media (max-width: 1100px) {
   .business-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -217,5 +311,41 @@
 
   .grid-filter-select {
     width: 100%;
+  }
+
+  .active-search-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-summary {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-summary span {
+    justify-content: center;
+  }
+
+  .clear-search-btn {
+    width: 100%;
+  }
+
+  .business-card-footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .business-view-btn {
+    justify-content: center;
+  }
+
+  .footer {
+    padding: 20px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 10px;
   }
 }
