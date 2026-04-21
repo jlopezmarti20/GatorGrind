@@ -36,10 +36,9 @@ const Business = () => {
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get(`http://localhost:5001/api/businesses/${id}/reviews`);
+      const response = await axios.get(`http://localhost:5001/api/reviews/${id}/reviews`);
       setReviews(response.data);
       
-      // Calculate average rating
       if (response.data.length > 0) {
         const avg = response.data.reduce((sum, review) => sum + review.rating, 0) / response.data.length;
         setRating(avg);
@@ -74,13 +73,12 @@ const Business = () => {
     }
 
     try {
-      await axios.post(`http://localhost:5001/api/businesses/${id}/reviews`, {
+      await axios.post(`http://localhost:5001/api/reviews/${id}/reviews`, {
         userId,
         rating: userRating,
         comment: reviewText
       });
       
-      // Refresh reviews
       fetchReviews();
       setReviewText("");
       setUserRating(null);
