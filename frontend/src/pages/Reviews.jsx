@@ -13,16 +13,9 @@ const Reviews = () => {
   const [editComment, setEditComment] = useState("");
   const [hoverRating, setHoverRating] = useState(0);
   const [deletingId, setDeletingId] = useState(null);
-  const [toast, setToast] = useState(null);
-
   useEffect(() => {
     fetchReviews();
   }, []);
-
-  const showToast = (message, type = "success") => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 3000);
-  };
 
   const fetchReviews = async () => {
     const userId = localStorage.getItem("userId");
@@ -66,12 +59,10 @@ const Reviews = () => {
         rating: editRating,
         comment: editComment,
       });
-      showToast("Review updated successfully!");
       cancelEdit();
       fetchReviews();
     } catch (error) {
       console.error("Error updating review:", error);
-      showToast("Failed to update review.", "error");
     }
   };
 
@@ -89,22 +80,16 @@ const Reviews = () => {
       await axios.delete(`http://localhost:5001/api/reviews/${id}`, {
         data: { userId },
       });
-      showToast("Review deleted.");
       setDeletingId(null);
       fetchReviews();
     } catch (error) {
       console.error("Error deleting review:", error);
-      showToast("Failed to delete review.", "error");
     }
   };
 
   return (
     <div className="reviews-page">
       <Navbar />
-
-      {toast && (
-        <div className={`toast ${toast.type}`}>{toast.message}</div>
-      )}
 
       <div className="reviews-container">
         <button className="back-btn" onClick={() => navigate("/profile")}>
