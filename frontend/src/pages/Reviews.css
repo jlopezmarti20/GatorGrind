@@ -53,13 +53,16 @@
   border-radius: 20px;
   padding: 24px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .review-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(29, 78, 216, 0.12);
+}
+
+.review-card-clickable {
+  cursor: pointer;
 }
 
 .review-card-header {
@@ -105,6 +108,185 @@
   color: #94a3b8;
 }
 
+.review-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #e0e7ff;
+}
+
+.review-edit-btn,
+.review-delete-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.review-edit-btn {
+  background: #e0e7ff;
+  color: #1d4ed8;
+}
+
+.review-edit-btn:hover {
+  background: #1d4ed8;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.review-delete-btn {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.review-delete-btn:hover {
+  background: #ef4444;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.delete-confirm {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  animation: fadeIn 0.2s ease;
+}
+
+.delete-confirm p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: #b42318;
+  font-weight: 500;
+}
+
+.delete-confirm-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.confirm-delete-btn {
+  padding: 6px 14px;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.confirm-delete-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+.cancel-delete-btn {
+  padding: 6px 14px;
+  background: #e2e8f0;
+  color: #4b5b88;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-delete-btn:hover {
+  background: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+.review-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.2s ease;
+}
+
+.review-edit-form h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #022279;
+}
+
+.edit-stars {
+  display: flex;
+  gap: 4px;
+  font-size: 26px;
+}
+
+.edit-review-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #e0e7ff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.edit-review-textarea:focus {
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+}
+
+.review-edit-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.save-review-btn {
+  padding: 8px 18px;
+  background: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-review-btn:hover {
+  background: #1e40af;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(29, 78, 216, 0.25);
+}
+
+.cancel-review-btn {
+  padding: 8px 18px;
+  background: #e2e8f0;
+  color: #4b5b88;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-review-btn:hover {
+  background: #cbd5e1;
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 700px) {
   .reviews-container {
     padding: 20px;
@@ -117,5 +299,21 @@
   .review-card-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .review-actions,
+  .review-edit-actions,
+  .delete-confirm-actions {
+    flex-direction: column;
+  }
+
+  .review-edit-btn,
+  .review-delete-btn,
+  .save-review-btn,
+  .cancel-review-btn,
+  .confirm-delete-btn,
+  .cancel-delete-btn {
+    width: 100%;
+    text-align: center;
   }
 }
