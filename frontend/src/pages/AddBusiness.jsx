@@ -56,24 +56,22 @@ const AddBusiness = () => {
       return;
     }
   
-    try {
+   try {
       const userId = localStorage.getItem("userId");
   
       const response = await axios.post(
         `${API_URL}/api/businesses/create`,
         {
-          business_name: formData.businessName,
+          businessName: formData.businessName,
           owner: userId,
           category: formData.category,
           description: formData.description,
-          website_url: formData.webAddress,
-          address: {
-            address1: formData.address1,
-            address2: formData.address2,
-            city: formData.city,
-            state: formData.state,
-            zipCode: formData.zipCode
-          }
+          webAddress: formData.webAddress,
+          address1: formData.address1,
+          address2: formData.address2,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode
         }
       );
   
