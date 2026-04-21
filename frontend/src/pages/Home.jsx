@@ -48,7 +48,7 @@ const Home = () => {
   }, []);
 
   const featuredBusinesses = useMemo(() => {
-    return businesses.slice(0, 3);
+    return businesses.slice(0, 10);
   }, [businesses]);
 
   const next = () => {

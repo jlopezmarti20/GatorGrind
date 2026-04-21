@@ -47,31 +47,41 @@ const AddBusiness = () => {
     setError("");
     setSuccess("");
     setLoading(true);
-
-    // Validation
+  
     if (!formData.businessName || !formData.address1 || !formData.city || 
         !formData.state || !formData.zipCode || !formData.category) {
       setError("Please fill in all required fields");
       setLoading(false);
       return;
     }
-
+  
     try {
-      // Get user ID from localStorage/session (assuming you store it after login)
       const userId = localStorage.getItem("userId");
-      
+  
       const response = await axios.post(
         "http://localhost:5001/api/businesses/create",
         {
-          ...formData,
+          business_name: formData.businessName,
           owner: userId,
+          category: formData.category,
+          description: formData.description,
+          website_url: formData.webAddress,
+          address: {
+            address1: formData.address1,
+            address2: formData.address2,
+            city: formData.city,
+            state: formData.state,
+            zipCode: formData.zipCode
+          }
         }
       );
-
+  
       setSuccess("Business created successfully!");
+  
       setTimeout(() => {
-        navigate(`/business/${response.data.business._id}`);
+        navigate(`/business/${response.data._id}`);
       }, 1500);
+  
     } catch (error) {
       setError(error.response?.data?.message || "Error creating business");
     } finally {

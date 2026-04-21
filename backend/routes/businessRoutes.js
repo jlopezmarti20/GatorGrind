@@ -110,6 +110,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+
 // get all businesses with filtering
 router.get("/", async (req, res) => {
   try {
