@@ -169,4 +169,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET businesses by owner ID (Add this to your routes file)
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    
+    // This specifically looks for businesses WHERE owner matches the ID
+    const businesses = await Business.find({ owner: userId });
+    
+    res.status(200).json(businesses);
+  } catch (error) {
+    console.error("Error fetching user businesses:", error);
+    res.status(500).json({ message: "Error fetching user businesses" });
+  }
+});
+
 module.exports = router;

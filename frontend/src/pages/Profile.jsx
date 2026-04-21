@@ -237,7 +237,7 @@ const Profile = () => {
       const userId = localStorage.getItem("userId");
       const businessData = {
         ...newBusiness,
-        user_id: userId,
+        owner: userId,
         rating: Number(newBusiness.rating) || 0
       };
 
